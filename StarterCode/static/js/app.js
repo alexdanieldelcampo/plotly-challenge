@@ -1,29 +1,33 @@
-// d3.selectAll("#selDataset").on("change", updatePlotly);
 
-d3.json("../data/samples.json").then((data) => {
-     
-      console.log(data.samples[0])
-        var top_values = data.samples[0].sample_values.slice(0,10)
-        var top_ids = data.samples[0].otu_ids.slice(0,10)
-        var top_labels = data.samples[0].otu_labels.slice(0,10)
-        // console.log(top_values)
-      
-
-});
+var subject = 0
+d3.selectAll("#selDataset").on("change", updatePlotly);
 
 
+function updatePlotly() {
+        // Use D3 to select the dropdown menu
+        var dropdownMenu = d3.select("#selDataset");
+        // Assign the value of the dropdown menu option to a variable
+        var subject = dropdownMenu.property("value");
+
+        buildBar(subject)
+        buildBubble(subject)
+        DemoInfo(subject)
+
+}
 
 
-function buildBar(){
+
+
+function buildBar(subject){
   
        
 
         d3.json("../data/samples.json").then((data) => {
      
-                console.log(data.samples[0])
-                  var top_values = data.samples[0].sample_values.slice(0,10).reverse()
-                  var top_ids = data.samples[0].otu_ids.slice(0,10).reverse()
-                  var top_labels = data.samples[0].otu_labels.slice(0,10).reverse()
+                // console.log(data.samples[0])
+                  var top_values = data.samples[subject].sample_values.slice(0,10).reverse()
+                  var top_ids = data.samples[subject].otu_ids.slice(0,10).reverse()
+                  var top_labels = data.samples[subject].otu_labels.slice(0,10).reverse()
                   var OTU_id = top_ids.map(d => "OTU " + d)
 
 
@@ -41,7 +45,7 @@ function buildBar(){
 
         // Define the plot layout
         var layout = {
-        title: "Eye Color vs Flicker",
+        title: "Top Ten OTU",
         xaxis: { title: "Values" },
         yaxis: { title: "OTU ID" },
         
@@ -52,15 +56,15 @@ function buildBar(){
 });
 }
 
-buildBar()
+buildBar(subject)
 
-function buildBubble(){
+function buildBubble(subject){
         d3.json("../data/samples.json").then((data) => {
      
                 
-                  var sample_values = data.samples[0].sample_values
-                  var otu_ids = data.samples[0].otu_ids
-                  var otu_labels = data.samples[0].otu_labels
+                  var sample_values = data.samples[subject].sample_values
+                  var otu_ids = data.samples[subject].otu_ids
+                  var otu_labels = data.samples[subject].otu_labels
                   
 
 
@@ -81,7 +85,7 @@ function buildBubble(){
 
         // Define the plot layout
         var layout = {
-        title: 'Marker Size and Color',
+        title: '',
         showlegend: false,
         height: 600,
         width: 1000,
@@ -94,38 +98,39 @@ function buildBubble(){
 
 }
 
-buildBubble()
+buildBubble(subject)
 
 
-function DemoInfo(){
+function DemoInfo(subject){
         d3.json("../data/samples.json").then((data) => {
                 
-                var age = data.metadata[0].age
-                var bbtype = data.metadata[0].bbtype
-                var ethnicity = data.metadata[0].ethnicity
-                var gender = data.metadata[0].gender
-                var id = data.metadata[0].id
-                var location = data.metadata[0].location
-                var wfreq = data.metadata[0].wfreq
+                var age = data.metadata[subject].age
+                var bbtype = data.metadata[subject].bbtype
+                var ethnicity = data.metadata[subject].ethnicity
+                var gender = data.metadata[subject].gender
+                var id = data.metadata[subject].id
+                var location = data.metadata[subject].location
+                var wfreq = data.metadata[subject].wfreq
                 
                 var area = d3.select("#sample-metadata");
-             ;
+                area.selectAll('tr').remove()
 
-                for (const [key, value] of Object.entries(data.metadata[0])) {
+                for (const [key, value] of Object.entries(data.metadata[subject])) {
                         // console.log(`${key}: ${value}`);
                         area.append("tr").append('td').text(`${key}: ${value}`);
                       }
         });
 }
-DemoInfo()
+DemoInfo(subject)
 
 
 function DropDown(){
         d3.json("../data/samples.json").then((data) => {
-                console.log(data.names)
+                // console.log(data.names)
                 var selection_box = d3.select("#selDataset");
+                
                 for (const [key, value] of Object.entries(data.names)) {
-                        console.log(`${key}: ${value}`);
+                        // console.log(`${key}: ${value}`);
                         selection_box.append('option').text(`${value}`).property('value', key)
                       
                       }

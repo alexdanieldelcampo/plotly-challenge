@@ -89,7 +89,7 @@ function buildBubble(subject){
         xaxis: { title: "OTU ID" },
         showlegend: false,
         height: 600,
-        width: 1000,
+        width: 1100,
         
         };
 
@@ -161,13 +161,13 @@ function Gauge(subject){
                           mode: "gauge+number",
                           gauge: {
                             axis: { range: [null, 10] },
-                            bar: { color: "#3182bd"},
+                            bar: { color: "#31a354"},
                             steps: [
-                              { range: [0, 2], color: "#ffffcc" },
-                              { range: [2, 4], color: "#c2e699" },
-                              { range: [4, 6], color: "#78c679" },
-                              { range: [6, 8], color: "#31a354" },
-                              { range: [8, 10], color: "#006837" },
+                              { range: [0, 2], color: "#f7f7f7" },
+                              { range: [2, 4], color: "#d9d9d9" },
+                              { range: [4, 6], color: "#bdbdbd" },
+                              { range: [6, 8], color: "#969696" },
+                              { range: [8, 10], color: "#737373" }
                             ],
                         //     threshold: {
                         //       line: { color: "red", width: 4 },

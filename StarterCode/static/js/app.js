@@ -12,7 +12,7 @@ function updatePlotly() {
         buildBar(subject)
         buildBubble(subject)
         DemoInfo(subject)
-
+        Gauge(subject)
 }
 
 
@@ -51,7 +51,7 @@ function buildBar(subject){
         
         };
 
-        // Plot the chart to a div tag with id "bar-plot"
+        // Plot the chart to a div tag with id "bar"
         Plotly.newPlot("bar", data, layout);
 });
 }
@@ -86,13 +86,14 @@ function buildBubble(subject){
         // Define the plot layout
         var layout = {
         title: '',
+        xaxis: { title: "OTU ID" },
         showlegend: false,
         height: 600,
         width: 1000,
         
         };
 
-        // Plot the chart to a div tag with id "bar-plot"
+        // Plot the chart to a div tag with id "bubbles"
         Plotly.newPlot("bubble", data, layout);
 });
 
@@ -139,3 +140,57 @@ function DropDown(){
 }
 
 DropDown()
+
+
+function Gauge(subject){
+        d3.json("../data/samples.json").then((data) => {
+               
+               
+               // testing what the max frequency is in the
+                var max_test = d3.max(data.metadata, d => d.wfreq)
+                console.log(max_test)
+                var wfreq = data.metadata[subject].wfreq
+
+
+                var trace1 = [
+                        {
+                          domain: { x: [0, 1], y: [0, 1] },
+                          value: wfreq,
+                          title: { text: "Belly Button Wash Frequency (per week)", font: { size: 20 } },
+                          type: "indicator",
+                          mode: "gauge+number",
+                          gauge: {
+                            axis: { range: [null, 10] },
+                            bar: { color: "#3182bd"},
+                            steps: [
+                              { range: [0, 2], color: "#ffffcc" },
+                              { range: [2, 4], color: "#c2e699" },
+                              { range: [4, 6], color: "#78c679" },
+                              { range: [6, 8], color: "#31a354" },
+                              { range: [8, 10], color: "#006837" },
+                            ],
+                        //     threshold: {
+                        //       line: { color: "red", width: 4 },
+                        //       thickness: 0.75,
+                        //       value: 490
+                        //     }
+                          }
+                        }
+                      ];
+                      
+                      var layout = { 
+                        font: { family: "Arial", size: 20 },
+                        width: 450, 
+                        height: 400, 
+                        margin: { t: 0, b: 0, l: 0} };
+                      Plotly.newPlot('gauge', trace1, layout);
+
+
+
+
+
+        });
+
+};
+
+Gauge(subject)

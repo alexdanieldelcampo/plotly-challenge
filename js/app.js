@@ -22,7 +22,7 @@ function buildBar(subject){
   
        
 
-        d3.json("../data/samples.json").then((data) => {
+        d3.json("data/samples.json").then((data) => {
      
                 // console.log(data.samples[0])
                   var top_values = data.samples[subject].sample_values.slice(0,10).reverse()
@@ -59,7 +59,7 @@ function buildBar(subject){
 buildBar(subject)
 
 function buildBubble(subject){
-        d3.json("../data/samples.json").then((data) => {
+        d3.json("data/samples.json").then((data) => {
      
                 
                   var sample_values = data.samples[subject].sample_values
@@ -103,7 +103,7 @@ buildBubble(subject)
 
 
 function DemoInfo(subject){
-        d3.json("../data/samples.json").then((data) => {
+        d3.json("data/samples.json").then((data) => {
                 
                 var age = data.metadata[subject].age
                 var bbtype = data.metadata[subject].bbtype
@@ -126,7 +126,7 @@ DemoInfo(subject)
 
 
 function DropDown(){
-        d3.json("../data/samples.json").then((data) => {
+        d3.json("data/samples.json").then((data) => {
                 // console.log(data.names)
                 var selection_box = d3.select("#selDataset");
                 
@@ -143,7 +143,7 @@ DropDown()
 
 
 function Gauge(subject){
-        d3.json("../data/samples.json").then((data) => {
+        d3.json("data/samples.json").then((data) => {
                
                
                // testing what the max frequency is in the
